@@ -1,17 +1,23 @@
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'spring-boot'
-apply plugin: 'au.com.dius.pact'
+
+
 
 buildscript {
+    ext {
+        springBootVersion = '1.5.10.RELEASE'
+    }
     repositories {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("au.com.dius:pact-jvm-provider-gradle_2.10:2.2.1")
     }
 }
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'au.com.dius.pact'
+apply plugin: 'org.springframework.boot'
 
 jar {
     baseName = 'gs-actuator-service'
