@@ -14,7 +14,7 @@ public class DummyConsumer {
     }
 
     public String getHelloWorld() throws IOException{
-        HttpResponse response = getResponse("/hello-world");
+        HttpResponse response = getResponse("/hello-world?name=sadsad");
         return getEntityAsString(response);
     }
 
@@ -22,9 +22,14 @@ public class DummyConsumer {
         return EntityUtils.toString(response.getEntity());
     }
 
-    public HttpResponse getResponse(String path) throws IOException {
+    private HttpResponse getResponse(String path) throws IOException {
         return Request.Get(url + path)
                 .execute().returnResponse();
     }
 
+    public String postName() throws IOException {
+        HttpResponse response = Request.Post(url + "/readName")
+                .execute().returnResponse();
+        return getEntityAsString(response);
+    }
 }

@@ -7,3 +7,5 @@ target
 .DS_STORE
 .gradle
 .idea
+out
+*.log

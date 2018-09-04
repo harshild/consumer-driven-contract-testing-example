@@ -1,0 +1,67 @@
+{
+  "provider" : {
+    "name" : "dummy-provider"
+  },
+  "consumer" : {
+    "name" : "dummy-consumer"
+  },
+  "interactions" : [ {
+    "providerState" : "HELLO WORLD",
+    "description" : "get hello world response",
+    "request" : {
+      "method" : "GET",
+      "path" : "/hello-world"
+    },
+    "response" : {
+      "status" : 200,
+      "headers" : {
+        "Content-Type" : "application/json;charset=UTF-8"
+      },
+      "body" : {
+        "id" : 8575734344,
+        "content" : "zrRKqGmmLAPYlYqFLhpb"
+      },
+      "responseMatchingRules" : {
+        "$.body.id" : {
+          "match" : "type"
+        },
+        "$.body.content" : {
+          "match" : "type"
+        }
+      }
+    }
+  }, {
+    "providerState" : "READ NAME",
+    "description" : "read post name response",
+    "request" : {
+      "method" : "POST",
+      "path" : "/readName"
+    },
+    "response" : {
+      "status" : 201,
+      "headers" : {
+        "Content-Type" : "application/json;charset=UTF-8"
+      },
+      "body" : {
+        "id" : 5661067680,
+        "content" : "kDwbkVrcyTaCIbdGTmUi"
+      },
+      "responseMatchingRules" : {
+        "$.body.id" : {
+          "match" : "type"
+        },
+        "$.body.content" : {
+          "match" : "type"
+        }
+      }
+    }
+  } ],
+  "metadata" : {
+    "pact-specification" : {
+      "version" : "2.0.0"
+    },
+    "pact-jvm" : {
+      "version" : "2.1.12"
+    }
+  }
+}

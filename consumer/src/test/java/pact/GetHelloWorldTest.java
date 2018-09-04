@@ -1,7 +1,12 @@
 package pact;
 
-import au.com.dius.pact.consumer.*;
-import au.com.dius.pact.model.PactFragment;
+import au.com.dius.pact.consumer.Pact;
+import au.com.dius.pact.consumer.PactProviderRuleMk2;
+import au.com.dius.pact.consumer.PactVerification;
+import au.com.dius.pact.consumer.dsl.DslPart;
+import au.com.dius.pact.consumer.dsl.PactDslJsonBody;
+import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
+import au.com.dius.pact.model.RequestResponsePact;
 import org.junit.Rule;
 import org.junit.Test;
 import utils.Configuration;
@@ -13,33 +18,32 @@ import static org.junit.Assert.assertEquals;
 public class GetHelloWorldTest
 {
     @Rule
-    public PactRule rule = new PactRule(Configuration.MOCK_HOST, Configuration.MOCK_HOST_PORT, this);
+    public PactProviderRuleMk2 rule = new PactProviderRuleMk2("ExampleProvider", this);
     private DslPart helloWorldResults;
 
-    @Pact(state = "HELLO WORLD", provider = Configuration.DUMMY_PROVIDER, consumer = Configuration.DUMMY_CONSUMER)
-    public PactFragment createFragment(ConsumerPactBuilder.PactDslWithProvider.PactDslWithState builder)
-    {
+    @Pact(consumer = Configuration.DUMMY_CONSUMER)
+    public RequestResponsePact createPact(PactDslWithProvider builder) {
         helloWorldResults = new PactDslJsonBody()
-                .id()
-                .stringType("content")
-                .asBody();
+                .id("id",21341245L)
+                .stringType("content","test")
+                .close();
 
         return builder
+                .given("")
                 .uponReceiving("get hello world response")
-                .path("/hello-world")
-                .method("GET")
+                    .path("/hello-world")
+                    .method("GET")
                 .willRespondWith()
-                .status(200)
-                .headers(Configuration.getHeaders())
-                .body(helloWorldResults)
-                .toFragment();
+                    .status(200)
+                    .headers(Configuration.getHeaders())
+                    .body(helloWorldResults.asBody())
+                .toPact();
     }
 
     @Test
-    @PactVerification("HELLO WORLD")
-    public void shouldGetHelloWorld() throws IOException
-    {
-        DummyConsumer restClient = new DummyConsumer(Configuration.SERVICE_URL);
+    @PactVerification()
+    public void runTest() throws IOException {
+        DummyConsumer restClient = new DummyConsumer(rule.getUrl());
         assertEquals(helloWorldResults.toString(), restClient.getHelloWorld());
     }
 }

@@ -1,57 +1,26 @@
-
-
-
-buildscript {
-    ext {
-        springBootVersion = '1.5.10.RELEASE'
-    }
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-        classpath("au.com.dius:pact-jvm-provider-gradle_2.10:2.2.1")
-    }
-}
-
-apply plugin: 'java'
-apply plugin: 'idea'
 apply plugin: 'au.com.dius.pact'
-apply plugin: 'org.springframework.boot'
 
 jar {
-    baseName = 'gs-actuator-service'
-    version =  '0.1.0'
-}
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile("org.springframework.boot:spring-boot-starter-web")
-    compile("org.springframework.boot:spring-boot-starter-actuator")
-    testCompile("org.springframework.boot:spring-boot-starter-test")
-    testCompile("junit:junit")
-    testCompile("au.com.dius:pact-jvm-provider_2.10:2.2.1")
+    baseName = 'example-provider'
+    version =  '1.0.0'
 }
 
 pact {
     serviceProviders {
-        dummyProvider {
-            protocol ='http'
+        ExampleProvider {
+            protocol = 'http'
             host = 'localhost'
             port = 8080
-            hasPactWith("dummy-consumer") {
-                pactFile = file("../pacts/dummy-consumer-dummy-provider.json")
+            path = '/'
+
+//            // Test Pacts from local Consumer
+//            hasPactWith('Consumer - Base contract') {
+//                pactSource = file("$rootDir/Pacts/Miku/BaseConsumer-ExampleProvider.json")
+//            }
+
+            hasPactsWith('Consumer - All contracts') {
+                pactFileLocation = file("$rootDir/Pacts/new")
             }
         }
     }
-}
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.1'
 }
