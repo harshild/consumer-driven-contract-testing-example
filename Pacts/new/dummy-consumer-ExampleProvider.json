@@ -108,6 +108,50 @@
             },
             "providerStates": [
                 {
+                    "name": "Hello with specific name"
+                }
+            ]
+        },
+        {
+            "description": "Name to post for hello world response",
+            "request": {
+                "method": "POST",
+                "path": "/hello-world-post",
+                "body": "abc"
+            },
+            "response": {
+                "status": 201,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                "body": {
+                    "id": 21341245,
+                    "content": "Hello abc!"
+                },
+                "matchingRules": {
+                    "body": {
+                        "$.id": {
+                            "matchers": [
+                                {
+                                    "match": "type"
+                                }
+                            ],
+                            "combine": "AND"
+                        },
+                        "$.content": {
+                            "matchers": [
+                                {
+                                    "match": "regex",
+                                    "regex": "[a-zA-Z]+\\s(abc!)"
+                                }
+                            ],
+                            "combine": "AND"
+                        }
+                    }
+                }
+            },
+            "providerStates": [
+                {
                     "name": "POST Api test"
                 }
             ]

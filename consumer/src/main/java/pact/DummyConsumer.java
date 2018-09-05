@@ -28,7 +28,11 @@ public class DummyConsumer {
                 .execute().returnResponse();
     }
 
-    public String postName(String name) throws IOException {
+    public String getHello(String name) throws IOException {
         return getEntityAsString(Request.Get(url+ "/hello-world?name="+name).execute().returnResponse());
+    }
+
+    public String postHello(String name) throws IOException {
+        return getEntityAsString(Request.Post(url+ "/hello-world-post").body(new StringEntity(name)).execute().returnResponse());
     }
 }

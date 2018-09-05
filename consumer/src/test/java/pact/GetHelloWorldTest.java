@@ -13,7 +13,6 @@ import org.junit.Test;
 import utils.Configuration;
 
 import java.io.IOException;
-import java.util.regex.Matcher;
 
 import static org.junit.Assert.assertEquals;
 
@@ -48,13 +47,22 @@ public class GetHelloWorldTest
                     .status(200)
                     .headers(Configuration.getHeaders())
                     .body(helloWorldResults.asBody())
-                .given("POST Api test")
+                .given("Hello with specific name")
                 .uponReceiving("Name to post for hello world response")
                     .method(HttpMethodName.GET.name())
                     .path("/hello-world")
                     .matchQuery("name","abc")
                 .willRespondWith()
                     .status(200)
+                    .headers(Configuration.getHeaders())
+                    .body(postNameResults)
+                .given("POST Api test")
+                    .uponReceiving("Name to post for hello world response")
+                    .method(HttpMethodName.POST.name())
+                    .path("/hello-world-post")
+                    .body("abc")
+                .willRespondWith()
+                    .status(201)
                     .headers(Configuration.getHeaders())
                     .body(postNameResults)
                 .toPact();
@@ -65,7 +73,8 @@ public class GetHelloWorldTest
     public void runTest() throws IOException {
         DummyConsumer restClient = new DummyConsumer(rule.getUrl());
         assertEquals(helloWorldResults.toString(), restClient.getHelloWorld());
-        assertEquals(postNameResults.toString(), restClient.postName("abc"));
+        assertEquals(postNameResults.toString(), restClient.getHello("abc"));
+        assertEquals(postNameResults.toString(), restClient.postHello("abc"));
 
     }
 }
