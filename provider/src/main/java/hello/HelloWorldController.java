@@ -20,9 +20,4 @@ public class HelloWorldController {
     public @ResponseBody Greeting sayHello(@RequestParam(value="name", required=false, defaultValue="World") String name) {
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
     }
-
-    @RequestMapping(method=RequestMethod.POST,path = "/readName")
-    public ResponseEntity<Object> readName(@RequestParam(value="name", required=false, defaultValue="no name") String name) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(new Greeting(counter.incrementAndGet(), String.format(template, name)));
-    }
 }

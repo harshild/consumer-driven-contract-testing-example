@@ -8,6 +8,7 @@ buildscript {
         classpath("au.com.dius:pact-jvm-provider-gradle_2.12:3.5.10")
     }
 }
+def pactVersion = "3.5.12"
 
 allprojects {
     apply plugin: 'java'
@@ -30,8 +31,8 @@ subprojects {
         compile("org.springframework.boot:spring-boot-devtools")
         testCompile('org.springframework.boot:spring-boot-starter-test')
         testCompile("junit:junit")
-        testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:3.5.12")
-        testCompile("au.com.dius:pact-jvm-consumer-java8_2.12:3.5.12")
+        testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:" + pactVersion)
+        testCompile("au.com.dius:pact-jvm-consumer-java8_2.12:" + pactVersion)
     }
 
 }

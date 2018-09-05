@@ -44,7 +44,71 @@
             },
             "providerStates": [
                 {
-                    "name": ""
+                    "name": "Hello World  Test"
+                }
+            ]
+        },
+        {
+            "description": "Name to post for hello world response",
+            "request": {
+                "method": "GET",
+                "path": "/hello-world",
+                "query": {
+                    "name": [
+                        "abc"
+                    ]
+                },
+                "matchingRules": {
+                    "query": {
+                        "name": {
+                            "matchers": [
+                                {
+                                    "match": "regex",
+                                    "regex": "abc"
+                                }
+                            ],
+                            "combine": "AND"
+                        }
+                    },
+                    "path": {
+                        
+                    }
+                }
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                "body": {
+                    "id": 21341245,
+                    "content": "Hello abc!"
+                },
+                "matchingRules": {
+                    "body": {
+                        "$.id": {
+                            "matchers": [
+                                {
+                                    "match": "type"
+                                }
+                            ],
+                            "combine": "AND"
+                        },
+                        "$.content": {
+                            "matchers": [
+                                {
+                                    "match": "regex",
+                                    "regex": "[a-zA-Z]+\\s(abc!)"
+                                }
+                            ],
+                            "combine": "AND"
+                        }
+                    }
+                }
+            },
+            "providerStates": [
+                {
+                    "name": "POST Api test"
                 }
             ]
         }

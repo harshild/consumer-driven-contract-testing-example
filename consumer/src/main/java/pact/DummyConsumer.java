@@ -2,6 +2,7 @@ package pact;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.fluent.Request;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class DummyConsumer {
     }
 
     public String getHelloWorld() throws IOException{
-        HttpResponse response = getResponse("/hello-world?name=sadsad");
+        HttpResponse response = getResponse("/hello-world");
         return getEntityAsString(response);
     }
 
@@ -22,14 +23,12 @@ public class DummyConsumer {
         return EntityUtils.toString(response.getEntity());
     }
 
-    private HttpResponse getResponse(String path) throws IOException {
+    public HttpResponse getResponse(String path) throws IOException {
         return Request.Get(url + path)
                 .execute().returnResponse();
     }
 
-    public String postName() throws IOException {
-        HttpResponse response = Request.Post(url + "/readName")
-                .execute().returnResponse();
-        return getEntityAsString(response);
+    public String postName(String name) throws IOException {
+        return getEntityAsString(Request.Get(url+ "/hello-world?name="+name).execute().returnResponse());
     }
 }

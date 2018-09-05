@@ -11,12 +11,7 @@ pact {
             protocol = 'http'
             host = 'localhost'
             port = 8080
-            path = '/'
-
-//            // Test Pacts from local Consumer
-//            hasPactWith('Consumer - Base contract') {
-//                pactSource = file("$rootDir/Pacts/Miku/BaseConsumer-ExampleProvider.json")
-//            }
+            //path = '/'
 
             hasPactsWith('Consumer - All contracts') {
                 pactFileLocation = file("$rootDir/Pacts/new")
