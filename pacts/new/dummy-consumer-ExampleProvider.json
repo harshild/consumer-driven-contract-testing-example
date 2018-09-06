@@ -117,6 +117,9 @@
             "request": {
                 "method": "POST",
                 "path": "/hello-world-post",
+                "headers": {
+                    "Content-Type": "text/plain"
+                },
                 "body": "abc"
             },
             "response": {
@@ -158,11 +161,11 @@
         }
     ],
     "metadata": {
-        "pact-specification": {
+        "pactSpecification": {
             "version": "3.0.0"
         },
         "pact-jvm": {
-            "version": "3.5.12"
+            "version": "3.5.20"
         }
     }
 }

@@ -1,14 +1,20 @@
+
+
 buildscript {
     repositories {
         mavenCentral()
     }
+    ext{
+        pactVersion = "3.5.20"
+    }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.8.RELEASE")
-        classpath("org.thymeleaf:thymeleaf:3.0.8.RELEASE")
-        classpath("au.com.dius:pact-jvm-provider-gradle_2.12:3.5.10")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:+")
+        classpath("org.thymeleaf:thymeleaf:+")
+        classpath("au.com.dius:pact-jvm-provider-gradle_2.12:" + pactVersion)
     }
 }
-def pactVersion = "3.5.12"
+
+def pactVersion = "3.5.20"
 
 allprojects {
     apply plugin: 'java'
@@ -26,13 +32,12 @@ subprojects {
     targetCompatibility = 1.8
 
     dependencies {
-        compile("org.springframework.boot:spring-boot-starter-web")
-        compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-        compile("org.springframework.boot:spring-boot-devtools")
-        testCompile('org.springframework.boot:spring-boot-starter-test')
-        testCompile("junit:junit")
-        testCompile("au.com.dius:pact-jvm-consumer-junit_2.12:" + pactVersion)
+        compile("org.springframework.boot:spring-boot-starter-web:+")
+        compile("org.springframework.boot:spring-boot-starter-thymeleaf:+")
+        compile("org.springframework.boot:spring-boot-devtools:+")
+        testCompile('org.springframework.boot:spring-boot-starter-test:+')
         testCompile("au.com.dius:pact-jvm-consumer-java8_2.12:" + pactVersion)
+        testCompile("au.com.dius:pact-jvm-provider-junit5_2.12:" + pactVersion)
     }
 
 }

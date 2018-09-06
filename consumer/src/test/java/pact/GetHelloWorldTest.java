@@ -16,12 +16,15 @@ import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
 
-public class GetHelloWorldTest
-{
+public class GetHelloWorldTest {
+    static {
+        System.setProperty("pact.rootDir","../pacts/new");
+    }
+
     @Rule
     public PactProviderRuleMk2 rule = new PactProviderRuleMk2("ExampleProvider", this);
     private DslPart helloWorldResults;
-    DslPart postNameResults;
+    private DslPart postNameResults;
 
     @Pact(consumer = Configuration.DUMMY_CONSUMER)
     public RequestResponsePact createPact(PactDslWithProvider builder) {
@@ -30,13 +33,10 @@ public class GetHelloWorldTest
                 .stringType("content","test")
                 .close();
 
-
-
         postNameResults = new PactDslJsonBody()
                 .id("id", 21341245L)
                 .stringMatcher("content", "[a-zA-Z]+\\s(abc!)","Hello abc!")
                 .close();
-
 
         return builder
                 .given("Hello World  Test")
@@ -58,8 +58,9 @@ public class GetHelloWorldTest
                     .body(postNameResults)
                 .given("POST Api test")
                     .uponReceiving("Name to post for hello world response")
-                    .method(HttpMethodName.POST.name())
+                    .method("POST")
                     .path("/hello-world-post")
+                    .headers("Content-Type","text/plain")
                     .body("abc")
                 .willRespondWith()
                     .status(201)
